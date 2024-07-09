@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.provider.MediaStore;
 import android.util.Base64;
 
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -32,8 +33,8 @@ public class GetPixelColorModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void init(String encodedImage, Callback callback) {
       try {
-        final byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-        this.bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        Uri uri = Uri.parse(encodedImage);
+        this.bitmap = MediaStore.Images.Media.getBitmap(reactContext.getContentResolver(), uri);
 
         callback.invoke(null, true);
       } catch (Exception e) {
