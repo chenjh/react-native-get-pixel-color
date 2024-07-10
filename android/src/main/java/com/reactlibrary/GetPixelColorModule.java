@@ -45,7 +45,8 @@ public class GetPixelColorModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getRGB(int x, int y, Callback callback) {
       try {
-        final int pixel = this.bitmap.getPixel(x, y);
+        // Switch x-y to make consistent with ios.
+        final int pixel = this.bitmap.getPixel(y, x);
 
         final int red = Color.red(pixel);
         final int green = Color.green(pixel);
